@@ -357,7 +357,7 @@
       <div class="pad">
         <div class="kicker"><span class="seal"></span> private nachricht</div>
         <h1 id="headline">Für Hannah</h1>
-        <p id="subline">Gib das Passwort ein. Danach wird die Seite „neu geladen“ und ich zeige dir die Nachricht.</p>
+        <p id="subline">Zum betreten der Seite benötigt es ein Passwort.</p>
 
         <!-- Login -->
         <div id="login">
@@ -420,8 +420,7 @@
         <div class="kicker"><span class="seal"></span> kleine hinweise</div>
         <h1 style="font-size:22px;margin:12px 0 8px;">Mini-Spielregeln</h1>
         <p>
-          Nach dem Passwort mache ich ein „Fake-Reload“. Danach siehst du die Nachricht.
-          Die zwei Zusätze sind optional — kleine Extras, die du freischalten kannst.
+          Tipp: Welche Zutat darf bei Niklas` Kochkünsten nie fehlen?
         </p>
 
         <div style="margin-top:14px;">
@@ -620,6 +619,7 @@ oder ein kleiner “Gutschein”.]</div>
   /*********************
    * PIXEL-HEART CANVAS
    *********************/
+  let t0 = performance.now();
   function startHeartPixels(){
     const c = document.getElementById("heartCanvas");
     if (!c) return;
@@ -647,13 +647,15 @@ oder ein kleiner “Gutschein”.]</div>
       const cx = w * 0.5;
       const cy = h * 0.55;
       const scale = Math.min(w, h) * 0.022;
+      const phase = (performance.now() - t0) / 1000;
+      const pulse = 1 + Math.sin(phase * 1.2) * 0.03; // 3% Puls
 
       const targets = [];
       const steps = 240;
       const layers = 7;
 
       for (let li=0; li<layers; li++){
-        const layerScale = scale * (1 + li*0.12);
+        const layerScale = scale * pulse * (1 + li*0.12);
         for (let i=0; i<steps; i++){
           const t = (i/steps) * Math.PI * 2;
           const p = heartPoint(t);
