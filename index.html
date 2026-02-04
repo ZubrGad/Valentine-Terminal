@@ -3,115 +3,143 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VALENTINE TERMINAL</title>
+  <title>Für Hannah</title>
   <style>
     :root{
-      --bg:#050805;
-      --fg:#7CFF7C;
-      --fg2:#2fe82f;
-      --dim:#1c3a1c;
-      --warn:#ff4d4d;
-      --ok:#7CFF7C;
-      --glow: 0 0 12px rgba(124,255,124,.45), 0 0 26px rgba(124,255,124,.20);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
+      /* Holz / Papier Palette */
+      --wood1:#3a2516;
+      --wood2:#2b1b10;
+      --wood3:#4b2f1d;
+      --paper:#f4efe6;
+      --paper2:#efe7d9;
+      --ink:#1f1a14;
+      --muted:#5a4b3d;
+      --accent:#8a5a3c;      /* warmes kupfer */
+      --accent2:#b08b5a;     /* helles gold */
+      --danger:#b42318;
+      --ok:#167a3a;
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: radial-gradient(1200px 900px at 50% 35%, #0a140a 0%, var(--bg) 55%, #020402 100%);
-      color: var(--fg);
-      font-family: var(--mono);
-    }
+      --radius: 22px;
+      --shadow: 0 28px 80px rgba(0,0,0,.35);
+      --shadow2: 0 10px 30px rgba(0,0,0,.18);
 
-    /* CRT vibe */
-    .crt {
-      position: relative;
-      height: 100%;
-      overflow: hidden;
+      --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
-    .crt::before{
-      content:"";
-      position:absolute; inset:0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 1px,
-        rgba(0,0,0,0.00) 2px,
-        rgba(0,0,0,0.00) 4px
-      );
-      pointer-events:none;
-      mix-blend-mode: overlay;
-      opacity: .25;
-    }
-    .crt::after{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(800px 500px at 50% 40%, rgba(124,255,124,.10), transparent 60%);
-      pointer-events:none;
-      opacity: .45;
-      filter: blur(1px);
-    }
+    html {
+  	background: #2b1b10; /* fallback, damit nix “durchscheint” */
+	}
 
-    .frame{
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 24px 18px 80px;
-      position: relative;
-      z-index: 2;
-    }
+    html, body {overflow-x: hidden;}
+    body{
+      isolation: isolate;   /* verhindert Blend-Artefakte */
+      position: relative;   /* fürs Overlay sauber */
+      color: var(--ink);
+      font-family: var(--sans);
 
-    .header{
+      /* Holz-Hintergrund (nur CSS) */
+      background:
+        radial-gradient(1200px 900px at 20% 10%, rgba(176,139,90,.18), transparent 55%),
+        radial-gradient(900px 700px at 80% 30%, rgba(138,90,60,.18), transparent 55%),
+        linear-gradient(120deg, rgba(255,255,255,.04), transparent 35%),
+        linear-gradient(180deg, var(--wood1), var(--wood2));
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      border: 1px solid rgba(124,255,124,.25);
-      border-radius: 14px;
-      padding: 14px 16px;
-      box-shadow: var(--glow);
-      background: rgba(0,0,0,.25);
-      backdrop-filter: blur(2px);
+      justify-content:center;
+      padding: 24px;
     }
 
-    .title{
-      letter-spacing: .12em;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: var(--fg2);
-      text-shadow: var(--glow);
-      margin: 0;
-      line-height: 1.2;
+    /* Subtiles “Holz-Maserung” Overlay */
+	body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: .10;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,.08) 0px,
+      rgba(0,0,0,.08) 1px,
+      rgba(255,255,255,.03) 2px,
+      rgba(255,255,255,.03) 6px
+    );
+}
+
+
+    .wrap{
+      width: min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 900px){
+      .wrap{ grid-template-columns: 1fr; }
     }
 
-    .badge{
+    .card{
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Paper card look */
+    .paper{
+      background:
+        radial-gradient(900px 400px at 30% 0%, rgba(176,139,90,.18), transparent 60%),
+        linear-gradient(180deg, var(--paper), var(--paper2));
+      border: 1px solid rgba(0,0,0,.10);
+    }
+    .paper::before{
+      content:"";
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity: .10;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,.08) 0px,
+          rgba(0,0,0,.08) 1px,
+          transparent 2px,
+          transparent 5px
+        );
+      mix-blend-mode: multiply;
+    }
+
+    .pad{ padding: 22px; position:relative; z-index:1; }
+
+    .kicker{
+      display:flex;
+      align-items:center;
+      gap: 10px;
       font-size: 12px;
-      padding: 6px 10px;
-      border: 1px solid rgba(124,255,124,.35);
-      border-radius: 999px;
-      color: var(--fg2);
-      background: rgba(0,0,0,.35);
-      box-shadow: var(--glow);
-      white-space: nowrap;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(31,26,20,.65);
+      font-weight: 650;
+    }
+    .seal{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(138,90,60,.08);
     }
 
-    .screen{
-      margin-top: 18px;
-      border: 1px solid rgba(124,255,124,.22);
-      border-radius: 18px;
-      background: rgba(0,0,0,.22);
-      box-shadow: var(--glow);
-      padding: 18px 16px;
-      min-height: 60vh;
+    h1{
+      margin: 12px 0 10px;
+      font-family: var(--serif);
+      font-size: clamp(24px, 3.2vw, 36px);
+      line-height: 1.15;
+      letter-spacing: .02em;
     }
-
-    pre{
+    p{
       margin: 0;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.45;
-      font-size: 14px;
-      text-shadow: 0 0 10px rgba(124,255,124,.18);
+      color: var(--muted);
+      line-height: 1.6;
     }
 
     .row{
@@ -119,293 +147,649 @@
       gap: 10px;
       align-items:center;
       flex-wrap: wrap;
-      margin-top: 14px;
+      margin-top: 16px;
     }
-
     input{
       flex: 1 1 220px;
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(124,255,124,.35);
-      background: rgba(0,0,0,.55);
-      color: var(--fg);
-      font-family: var(--mono);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(31,26,20,.18);
+      background: rgba(255,255,255,.55);
+      color: var(--ink);
       outline: none;
-      box-shadow: inset 0 0 0 9999px rgba(0,0,0,.0);
+      font-size: 15px;
+      box-shadow: var(--shadow2);
     }
-    input::placeholder{ color: rgba(124,255,124,.45); }
+    input::placeholder{ color: rgba(31,26,20,.45); }
 
     button{
       padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(124,255,124,.45);
-      background: rgba(0,0,0,.45);
-      color: var(--fg2);
-      font-family: var(--mono);
+      border-radius: 14px;
+      border: 1px solid rgba(31,26,20,.18);
+      background: linear-gradient(180deg, rgba(138,90,60,.16), rgba(138,90,60,.08));
+      color: rgba(31,26,20,.90);
       cursor:pointer;
-      box-shadow: var(--glow);
+      font-weight: 700;
+      box-shadow: var(--shadow2);
+      transition: transform .08s ease, filter .12s ease;
     }
-    button:hover{ filter: brightness(1.1); }
+    button:hover{ filter: brightness(1.03); }
     button:active{ transform: translateY(1px); }
-
-    .hint{
-      margin-top: 10px;
-      color: rgba(124,255,124,.65);
-      font-size: 12px;
+    button:disabled{
+      opacity:.55;
+      cursor: not-allowed;
+      transform:none;
     }
 
     .status{
       margin-top: 12px;
-      font-size: 12px;
-      color: rgba(124,255,124,.70);
+      font-size: 13px;
+      color: rgba(31,26,20,.65);
     }
-    .status.error{ color: var(--warn); text-shadow: 0 0 12px rgba(255,77,77,.25); }
+    .status.err{ color: var(--danger); }
     .status.ok{ color: var(--ok); }
 
-    .progress{
-      margin-top: 14px;
-      height: 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(124,255,124,.35);
-      background: rgba(0,0,0,.35);
-      overflow: hidden;
-      display:none;
-    }
-    .bar{
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(124,255,124,.25), rgba(124,255,124,.85), rgba(124,255,124,.25));
-      box-shadow: var(--glow);
-    }
-
-    .cursor {
-      display:inline-block;
-      width: 10px;
-      animation: blink 1s steps(2, start) infinite;
-    }
-    @keyframes blink { to { visibility: hidden; } }
-
-    .footer{
-      position: fixed;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      font-size: 11px;
-      color: rgba(124,255,124,.55);
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(124,255,124,.18);
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
       padding: 8px 10px;
       border-radius: 999px;
+      border: 1px solid rgba(31,26,20,.14);
+      background: rgba(255,255,255,.50);
+      color: rgba(31,26,20,.70);
+      font-size: 12px;
+      box-shadow: var(--shadow2);
     }
 
-    /* mobile comfort */
-    @media (max-width: 420px){
-      pre{ font-size: 13px; }
-      .badge{ display:none; }
+    .divider{
+      margin: 18px 0;
+      height: 1px;
+      background: rgba(31,26,20,.12);
+    }
+
+    .letter{
+      white-space: pre-wrap;
+      line-height: 1.8;
+      font-size: 16px;
+      color: rgba(31,26,20,.92);
+    }
+
+    .fold{
+      border-radius: 18px;
+      border: 1px solid rgba(31,26,20,.12);
+      background: rgba(255,255,255,.45);
+      padding: 16px 16px;
+      box-shadow: var(--shadow2);
+      margin-top: 14px;
+    }
+
+    .lockedTitle{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: .01em;
+    }
+    .tag{
+      font-size: 12px;
+      color: rgba(31,26,20,.65);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,26,20,.12);
+      background: rgba(255,255,255,.55);
+    }
+
+    .reveal{
+      display:none;
+      margin-top: 10px;
+      animation: fadeIn .45s ease forwards;
+    }
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(6px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    /* Fake reload overlay */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(20,14,10,.55);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+    }
+    .loaderCard{
+      width: min(520px, calc(100% - 36px));
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(244,239,230,.95), rgba(239,231,217,.95));
+      border: 1px solid rgba(0,0,0,.12);
+      box-shadow: var(--shadow);
+      padding: 18px 18px;
+    }
+    .loaderTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .gears{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      padding-left: 8px;
+    }
+    .gear{
+      width: 22px;
+      height: 22px;
+      opacity: .95;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.18));
+      transform-origin: 50% 50%;
+    }
+    .gear.g1{ animation: gearSpin 1.05s linear infinite; }
+    .gear.g2{
+      width: 18px;
+      height: 18px;
+      margin-left: -10px;
+      margin-top: 10px;
+      animation: gearSpinReverse .85s linear infinite;
+    }
+    @keyframes gearSpin { to { transform: rotate(360deg); } }
+    @keyframes gearSpinReverse { to { transform: rotate(-360deg); } }
+
+    .meter{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(31,26,20,.10);
+      border: 1px solid rgba(31,26,20,.12);
+      overflow:hidden;
+    }
+    .bar{
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .08s linear;
+    }
+
+    .tiny{
+      font-size: 12px;
+      color: rgba(31,26,20,.62);
+      margin-top: 10px;
+      line-height: 1.5;
     }
   </style>
 </head>
 
 <body>
-  <div class="crt">
-    <div class="frame">
-      <div class="header">
-        <h1 class="title">VALENTINE // SECURE MESSAGE TERMINAL</h1>
-        <div class="badge" id="clock">SYNCING...</div>
+  <!-- Fake reload overlay -->
+  <div class="overlay" id="overlay" aria-live="polite" aria-busy="true">
+    <div class="loaderCard">
+      <div class="loaderTop">
+        <div class="kicker"><span class="seal"></span> Verbindung wird neu aufgebaut</div>
+
+        <div class="gears" aria-hidden="true">
+          <svg class="gear g1" viewBox="0 0 24 24" fill="none">
+            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="rgba(31,26,20,.85)" stroke-width="1.6"/>
+            <path d="M19.3 13.1v-2.2l-1.8-.6a7.5 7.5 0 0 0-.7-1.6l.9-1.7-1.6-1.6-1.7.9c-.5-.3-1-.5-1.6-.7L13.1 4.7h-2.2l-.6 1.8c-.6.2-1.1.4-1.6.7l-1.7-.9-1.6 1.6.9 1.7c-.3.5-.5 1-.7 1.6l-1.8.6v2.2l1.8.6c.2.6.4 1.1.7 1.6l-.9 1.7 1.6 1.6 1.7-.9c.5.3 1 .5 1.6.7l.6 1.8h2.2l.6-1.8c.6-.2 1.1-.4 1.6-.7l1.7.9 1.6-1.6-.9-1.7c.3-.5.5-1 .7-1.6l1.8-.6Z" stroke="rgba(31,26,20,.55)" stroke-width="1.2"/>
+          </svg>
+
+          <svg class="gear g2" viewBox="0 0 24 24" fill="none">
+            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="rgba(31,26,20,.85)" stroke-width="1.6"/>
+            <path d="M19.3 13.1v-2.2l-1.8-.6a7.5 7.5 0 0 0-.7-1.6l.9-1.7-1.6-1.6-1.7.9c-.5-.3-1-.5-1.6-.7L13.1 4.7h-2.2l-.6 1.8c-.6.2-1.1.4-1.6.7l-1.7-.9-1.6 1.6.9 1.7c-.3.5-.5 1-.7 1.6l-1.8.6v2.2l1.8.6c.2.6.4 1.1.7 1.6l-.9 1.7 1.6 1.6 1.7-.9c.5.3 1 .5 1.6.7l.6 1.8h2.2l.6-1.8c.6-.2 1.1-.4 1.6-.7l1.7.9 1.6-1.6-.9-1.7c.3-.5.5-1 .7-1.6l1.8-.6Z" stroke="rgba(31,26,20,.55)" stroke-width="1.2"/>
+          </svg>
+        </div>
       </div>
 
-      <div class="screen">
-        <pre id="out"></pre>
+      <div class="meter"><div class="bar" id="overlayBar"></div></div>
+      <div class="tiny" id="overlayText">Bitte kurz warten…</div>
+    </div>
+  </div>
 
-        <div class="row" id="loginRow" style="display:none;">
-          <input id="pw" type="password" autocomplete="off" placeholder="PASSWORD" />
-          <button id="enterBtn">ENTER</button>
+  <div class="wrap" id="app" style="display:none;">
+    <!-- Main -->
+    <div class="card paper">
+      <div class="pad">
+        <div class="kicker"><span class="seal"></span> private nachricht</div>
+        <h1 id="headline">Für Hannah</h1>
+        <p id="subline">Gib das Passwort ein. Danach wird die Seite „neu geladen“ und ich zeige dir die Nachricht.</p>
+
+        <!-- Login -->
+        <div id="login">
+          <div class="row">
+            <input id="pw" type="password" placeholder="Passwort" autocomplete="off" />
+            <button id="btn">Öffnen</button>
+          </div>
+          <div class="status" id="status"></div>
+          <div class="divider"></div>
+          <div class="pill">Ort: <span id="placeLabel1">Karlsruhe</span> • <span id="clock">--:--</span></div>
         </div>
 
-        <div class="progress" id="progress">
-          <div class="bar" id="bar"></div>
-        </div>
+        <!-- Content -->
+        <div id="content" style="display:none;">
+          <div class="pill"><span id="placeLabel2">Karlsruhe</span> • <span id="clock2">--:--</span></div>
+          <div class="divider"></div>
 
-        <div class="status" id="status"></div>
-        <div class="hint" id="hint"></div>
+          <div class="letter" id="letter"></div>
+
+          <!-- Rätsel 1 -->
+          <div class="fold">
+            <div class="lockedTitle">
+              <div>Zusatz ①</div>
+              <div class="tag" id="tag1">verschlossen</div>
+            </div>
+            <p style="margin-top:-6px;">Kleines Rätsel: <b id="riddle1Q"></b></p>
+            <div class="row">
+              <input id="riddle1A" placeholder="Antwort" autocomplete="off" />
+              <button id="riddle1Btn">Prüfen</button>
+            </div>
+            <div class="status" id="riddle1Status"></div>
+            <div class="reveal" id="reveal1"></div>
+          </div>
+
+          <!-- Rätsel 2 -->
+          <div class="fold">
+            <div class="lockedTitle">
+              <div>Zusatz ②</div>
+              <div class="tag" id="tag2">verschlossen</div>
+            </div>
+            <p style="margin-top:-6px;">Noch eins: <b id="riddle2Q"></b></p>
+            <div class="row">
+              <input id="riddle2A" placeholder="Antwort" autocomplete="off" />
+              <button id="riddle2Btn">Prüfen</button>
+            </div>
+            <div class="status" id="riddle2Status"></div>
+            <div class="reveal" id="reveal2"></div>
+          </div>
+
+          <div class="tiny" style="margin-top:14px;">
+            (P.S. Wenn du willst, kannst du mir später sagen, ob du die Rätsel sweet oder nervig fandest 😄)
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="footer">Tip: auf dem Handy quer drehen = mehr Terminal-Vibes.</div>
+    <!-- Side / Guidance -->
+    <div class="card paper">
+      <div class="pad">
+        <div class="kicker"><span class="seal"></span> kleine hinweise</div>
+        <h1 style="font-size:22px;margin:12px 0 8px;">Mini-Spielregeln</h1>
+        <p>
+          Nach dem Passwort mache ich ein „Fake-Reload“. Danach siehst du die Nachricht.
+          Die zwei Zusätze sind optional — kleine Extras, die du freischalten kannst.
+        </p>
+
+        <div style="margin-top:14px;">
+          <canvas id="heartCanvas"
+                  style="width:100%; height:240px; border-radius:18px; border:1px solid rgba(31,26,20,.12); background: rgba(255,255,255,.35); box-shadow: var(--shadow2);"></canvas>
+          <div class="tiny" style="margin-top:10px;">Die Punkte finden ihren Platz — so wie ich meinen bei dir.</div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="pill">Tipp: Groß-/Kleinschreibung zählt.</div>
+        <div style="height:10px"></div>
+        <div class="pill">Tipp: Antworten ohne Leerzeichen probieren.</div>
+      </div>
+    </div>
   </div>
 
 <script>
-  /***************
-   * KONFIG
-   ***************/
-  const PASSWORD = "hannah<3";  // <-- HIER DEIN PASSWORT setzen (klein/groß beachten)
-  const OWNER_NAME = "Hannah";  // optional: Name
+  /*********************
+   * KONFIG – HIER ANPASSEN
+   *********************/
+  const CONFIG = {
+    recipientName: "Hannah",
+    placeLabel: "Karlsruhe",
 
-  // <-- HIER DEINE NACHRICHT EINTRAGEN:
-  const SECRET_MESSAGE = `
-Hey ${OWNER_NAME},
+    // Passwort (Spiel-Security)
+    password: "hannah<3",
 
-[Schreib hier deinen Text rein.]
+    // Hauptnachricht
+    letter: `
+Hey Hannah,
+
+[Hier kommt deine Hauptnachricht rein.
+Gerne ruhig ein bisschen länger — das wirkt wie ein echter Brief.]
 
 Ich hab dich lieb.
 — [Dein Name]
-  `.trim();
+    `.trim(),
 
-  /***************
-   * TERMINAL ENGINE
-   ***************/
-  const out = document.getElementById("out");
-  const statusEl = document.getElementById("status");
-  const hintEl = document.getElementById("hint");
-  const loginRow = document.getElementById("loginRow");
-  const pw = document.getElementById("pw");
-  const btn = document.getElementById("enterBtn");
-  const progress = document.getElementById("progress");
-  const bar = document.getElementById("bar");
+    // Rätsel 1
+    riddle1: {
+      question: "Wie heißt unser Insider-Name für ______?",
+      // Vergleich: klein + ohne Leerzeichen (nicht zu fies)
+      answer: "beispielantwort",
+      revealHtml: `
+        <div class="letter"><strong>Freigeschaltet:</strong>
 
-  function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+[Hier kommt Zusatz ① rein – z.B. 3 Gründe, warum du sie magst,
+oder eine Erinnerung, die du schön findest.]</div>
+      `.trim()
+    },
 
-  async function typeLine(text, delay=12){
-    for (let i=0;i<text.length;i++){
-      out.textContent += text[i];
-      await sleep(delay);
-    }
-    out.textContent += "\n";
-    scrollToBottom();
+    // Rätsel 2
+    riddle2: {
+      question: "Welche Zahl/Tag erinnert an ______? (z.B. 0908)",
+      answer: "0908",
+      revealHtml: `
+        <div class="letter"><strong>Freigeschaltet:</strong>
+
+[Hier kommt Zusatz ② rein – z.B. eine Date-Idee, ein Versprechen,
+oder ein kleiner “Gutschein”.]</div>
+      `.trim()
+    },
+  };
+
+  /*********************
+   * UTIL
+   *********************/
+  const $ = (id) => document.getElementById(id);
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+  function normalize(s){
+    return (s ?? "").toString().toLowerCase().replace(/\\s+/g,"").trim();
   }
 
-  function scrollToBottom(){
-    const screen = document.querySelector(".screen");
-    screen.scrollTop = screen.scrollHeight;
+  function setStatus(el, text, kind=""){
+    el.textContent = text || "";
+    el.className = "status" + (kind ? " " + kind : "");
   }
 
-  function setStatus(text, kind=""){
-    statusEl.textContent = text || "";
-    statusEl.className = "status" + (kind ? " " + kind : "");
-  }
-
-  function setHint(text){
-    hintEl.textContent = text || "";
-  }
-
-  function showLogin(){
-    loginRow.style.display = "flex";
-    pw.focus();
-    setHint("Hinweis: Groß-/Kleinschreibung zählt.");
-  }
-
-  async function boot(){
-    out.textContent = "";
-    setStatus("");
-    setHint("");
-
-    const lines = [
-      "BOOTING VALENTINE OS v1.4.2 ...",
-      "LOADING MODULES: [terminal] [encryption] [romance] ...",
-      "CHECKING INTEGRITY .......... OK",
-      "ESTABLISHING SECURE LINK .... OK",
-      "",
-      "AUTH REQUIRED",
-      "ENTER PASSWORD TO CONTINUE",
-      ""
-    ];
-
-    for (const l of lines){
-      await typeLine(l, 10);
-      await sleep(90);
-    }
-
-    out.textContent += "> ";
-    out.textContent += "█\n";
-    showLogin();
-  }
-
-  async function decryptSequence(){
-    loginRow.style.display = "none";
-    setHint("");
-    setStatus("ACCESS GRANTED", "ok");
-
-    // remove the block cursor line (last line)
-    out.textContent = out.textContent.replace(/\n> █\n?$/, "\n> ********\n");
-
-    await sleep(400);
-    await typeLine("", 0);
-    await typeLine("INITIALIZING DECRYPTION...", 12);
-    await typeLine("USING KEY EXCHANGE: OK", 12);
-    await typeLine("DECRYPTING PAYLOAD...", 12);
-
-    progress.style.display = "block";
-    bar.style.width = "0%";
-
-    for (let p=0; p<=100; p+=2){
-      bar.style.width = p + "%";
-      await sleep(30 + Math.random()*40);
-    }
-
-    await sleep(250);
-    progress.style.display = "none";
-    await typeLine("", 0);
-    await typeLine("DONE.", 12);
-    await sleep(250);
-
-    // Clear and print message
-    out.textContent = "";
-    await typeLine("----- SECURE MESSAGE BEGIN -----", 6);
-    await typeLine("", 0);
-
-    // Type message a bit slower for drama
-    const msgLines = SECRET_MESSAGE.split("\n");
-    for (const l of msgLines){
-      await typeLine(l, 12);
-      await sleep(60);
-    }
-
-    await typeLine("", 0);
-    await typeLine("----- SECURE MESSAGE END -----", 6);
-    await typeLine("", 0);
-    out.textContent += ">";
-    out.textContent += " ";
-    out.textContent += "█";
-  }
-
-  function deny(){
-    setStatus("ACCESS DENIED", "error");
-    setHint("Tipp: Vielleicht ein Insider? 🫶");
-    pw.value = "";
-    pw.focus();
-  }
-
-  async function handleLogin(){
-    const entered = pw.value;
-    // little "thinking"
-    setStatus("VERIFYING...", "");
-    await sleep(250);
-
-    if (entered === PASSWORD){
-      await decryptSequence();
-    } else {
-      deny();
-    }
-  }
-
-  btn.addEventListener("click", handleLogin);
-  pw.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handleLogin();
-  });
-
-  // clock badge
   function tickClock(){
-    const el = document.getElementById("clock");
     const d = new Date();
     const hh = String(d.getHours()).padStart(2,"0");
     const mm = String(d.getMinutes()).padStart(2,"0");
-    el.textContent = `BERLIN ${hh}:${mm}`;
+    const t = `${hh}:${mm}`;
+    $("clock").textContent = t;
+    $("clock2").textContent = t;
   }
-  setInterval(tickClock, 1000);
-  tickClock();
 
-  boot();
+  /*********************
+   * STAGES (Fake Reload)
+   *********************/
+  const STAGE_KEY = "val_stage"; // values: "", "reloading", "unlocked"
+
+  async function fakeReloadSequence(){
+    const overlay = $("overlay");
+    const bar = $("overlayBar");
+    const txt = $("overlayText");
+
+    overlay.style.display = "flex";
+    bar.style.width = "0%";
+    txt.textContent = "Bitte kurz warten…";
+
+    const steps = [
+      ["Sichere Verbindung wird hergestellt…", 18],
+      ["Daten werden vorbereitet…", 45],
+      ["Feinschliff…", 72],
+      ["Fertig.", 100]
+    ];
+
+    for (const [label, target] of steps){
+      txt.textContent = label;
+      const current = parseInt(bar.style.width || "0", 10) || 0;
+      for (let p=current; p<=target; p+=2){
+        bar.style.width = p + "%";
+        await sleep(18 + Math.random()*30);
+      }
+      await sleep(180);
+    }
+
+    await sleep(250);
+    overlay.style.display = "none";
+  }
+
+  function showContent(){
+    $("headline").textContent = `Für ${CONFIG.recipientName}`;
+    $("subline").textContent = " ";
+    $("login").style.display = "none";
+    $("content").style.display = "block";
+    $("letter").textContent = CONFIG.letter;
+
+    $("riddle1Q").textContent = CONFIG.riddle1.question;
+    $("riddle2Q").textContent = CONFIG.riddle2.question;
+
+    $("reveal1").innerHTML = CONFIG.riddle1.revealHtml;
+    $("reveal2").innerHTML = CONFIG.riddle2.revealHtml;
+  }
+
+  /*********************
+   * LOGIN FLOW
+   *********************/
+  async function handleLogin(){
+    const entered = $("pw").value;
+    setStatus($("status"), "Prüfe…");
+
+    await sleep(220);
+
+    if (entered === CONFIG.password){
+      // set stage & force an actual reload (sieht “echt” aus)
+      sessionStorage.setItem(STAGE_KEY, "reloading");
+      location.reload();
+    } else {
+      setStatus($("status"), "Das Passwort war leider nicht richtig.", "err");
+      $("pw").value = "";
+      $("pw").focus();
+    }
+  }
+
+  /*********************
+   * RÄTSEL
+   *********************/
+  function unlockRiddle(which){
+    if (which === 1){
+      $("tag1").textContent = "offen";
+      $("tag1").style.color = "rgba(22,122,58,.95)";
+      $("reveal1").style.display = "block";
+      setStatus($("riddle1Status"), "Richtig ✅", "ok");
+      $("riddle1A").disabled = true;
+      $("riddle1Btn").disabled = true;
+    } else {
+      $("tag2").textContent = "offen";
+      $("tag2").style.color = "rgba(22,122,58,.95)";
+      $("reveal2").style.display = "block";
+      setStatus($("riddle2Status"), "Richtig ✅", "ok");
+      $("riddle2A").disabled = true;
+      $("riddle2Btn").disabled = true;
+    }
+  }
+
+  async function checkRiddle(which){
+    const cfg = which === 1 ? CONFIG.riddle1 : CONFIG.riddle2;
+    const input = which === 1 ? $("riddle1A") : $("riddle2A");
+    const status = which === 1 ? $("riddle1Status") : $("riddle2Status");
+
+    setStatus(status, "Prüfe…");
+    await sleep(180);
+
+    if (normalize(input.value) === normalize(cfg.answer)){
+      unlockRiddle(which);
+    } else {
+      setStatus(status, "Nope — probier’s nochmal 🙂", "err");
+      input.value = "";
+      input.focus();
+    }
+  }
+
+  /*********************
+   * PIXEL-HEART CANVAS
+   *********************/
+  function startHeartPixels(){
+    const c = document.getElementById("heartCanvas");
+    if (!c) return;
+    const ctx = c.getContext("2d");
+
+    function resize(){
+      const rect = c.getBoundingClientRect();
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      c.width = Math.floor(rect.width * dpr);
+      c.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    function heartPoint(t){
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = 13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
+      return { x, y };
+    }
+
+    function buildTargets(){
+      const w = c.getBoundingClientRect().width;
+      const h = c.getBoundingClientRect().height;
+      const cx = w * 0.5;
+      const cy = h * 0.55;
+      const scale = Math.min(w, h) * 0.022;
+
+      const targets = [];
+      const steps = 240;
+      const layers = 7;
+
+      for (let li=0; li<layers; li++){
+        const layerScale = scale * (1 + li*0.12);
+        for (let i=0; i<steps; i++){
+          const t = (i/steps) * Math.PI * 2;
+          const p = heartPoint(t);
+          targets.push({ x: cx + p.x * layerScale, y: cy - p.y * layerScale });
+        }
+      }
+      return targets;
+    }
+
+    let targets = buildTargets();
+    const N = Math.min(850, targets.length);
+    const particles = [];
+
+    function rand(min,max){ return min + Math.random()*(max-min); }
+
+    function initParticles(){
+      particles.length = 0;
+      const w0 = c.getBoundingClientRect().width;
+      const h0 = c.getBoundingClientRect().height;
+      for (let i=0; i<N; i++){
+        const t = targets[i % targets.length];
+        particles.push({
+          x: rand(0, w0),
+          y: rand(0, h0),
+          vx: 0, vy: 0,
+          tx: t.x, ty: t.y,
+          r: 2 + Math.random()*1.5
+        });
+      }
+    }
+    initParticles();
+
+    let lastRetarget = performance.now();
+
+    function retarget(){
+      targets = buildTargets();
+      for (let i=0; i<particles.length; i++){
+        const t = targets[i % targets.length];
+        particles[i].tx = t.x;
+        particles[i].ty = t.y;
+      }
+    }
+
+    function draw(){
+      const w = c.getBoundingClientRect().width;
+      const h = c.getBoundingClientRect().height;
+
+      ctx.clearRect(0,0,w,h);
+
+      const g = ctx.createRadialGradient(w*0.5, h*0.45, 10, w*0.5, h*0.55, Math.max(w,h)*0.65);
+      g.addColorStop(0, "rgba(176,139,90,0.14)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      const now = performance.now();
+      if (now - lastRetarget > 3500){
+        lastRetarget = now;
+        retarget();
+      }
+
+      for (const p of particles){
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+
+        p.vx += dx * 0.006;
+        p.vy += dy * 0.006;
+
+        p.vx *= 0.78;
+        p.vy *= 0.78;
+
+        // tiny drift
+        p.vx += (Math.random()-0.5) * 0.010;
+        p.vy += (Math.random()-0.5) * 0.010;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(165,40,40,0.70)";
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      for (let i=0; i<particles.length; i+=18){
+        const p = particles[i];
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(200,60,60,0.75)";
+        ctx.arc(p.x, p.y, p.r*0.72, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  }
+
+  /*********************
+   * INIT
+   *********************/
+  (async function init(){
+    $("app").style.display = "grid";
+    $("placeLabel1").textContent = CONFIG.placeLabel;
+    $("placeLabel2").textContent = CONFIG.placeLabel;
+    $("headline").textContent = `Für ${CONFIG.recipientName}`;
+
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    // start animation immediately
+    startHeartPixels();
+
+    // hook events
+    $("btn").addEventListener("click", handleLogin);
+    $("pw").addEventListener("keydown", (e)=>{ if (e.key === "Enter") handleLogin(); });
+
+    $("riddle1Btn").addEventListener("click", ()=>checkRiddle(1));
+    $("riddle1A").addEventListener("keydown", (e)=>{ if (e.key === "Enter") checkRiddle(1); });
+
+    $("riddle2Btn").addEventListener("click", ()=>checkRiddle(2));
+    $("riddle2A").addEventListener("keydown", (e)=>{ if (e.key === "Enter") checkRiddle(2); });
+
+    // stage handling
+    const stage = sessionStorage.getItem(STAGE_KEY) || "";
+    if (stage === "reloading"){
+      sessionStorage.setItem(STAGE_KEY, "unlocked");
+      await fakeReloadSequence();
+      showContent();
+    } else if (stage === "unlocked"){
+      showContent();
+    } else {
+      $("pw").focus();
+    }
+  })();
 </script>
 </body>
 </html>
+
