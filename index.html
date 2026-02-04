@@ -407,9 +407,7 @@
             <div class="reveal" id="reveal2"></div>
           </div>
 
-          <div class="tiny" style="margin-top:14px;">
-            (P.S. Wenn du willst, kannst du mir später sagen, ob du die Rätsel sweet oder nervig fandest 😄)
-          </div>
+          
         </div>
       </div>
     </div>
@@ -418,7 +416,6 @@
     <div class="card paper">
       <div class="pad">
         <div class="kicker"><span class="seal"></span> kleine hinweise</div>
-        <h1 style="font-size:22px;margin:12px 0 8px;">Mini-Spielregeln</h1>
         <p>
           Tipp: Welche Zutat darf bei Niklas` Kochkünsten nie fehlen?
         </p>
@@ -426,7 +423,7 @@
         <div style="margin-top:14px;">
           <canvas id="heartCanvas"
                   style="width:100%; height:240px; border-radius:18px; border:1px solid rgba(31,26,20,.12); background: rgba(255,255,255,.35); box-shadow: var(--shadow2);"></canvas>
-          <div class="tiny" style="margin-top:10px;">Die Punkte finden ihren Platz — so wie ich meinen bei dir.</div>
+          <div class="tiny" style="margin-top:10px;">07.01.2026 <3.</div>
         </div>
 
         <div class="divider"></div>
@@ -446,43 +443,50 @@
     placeLabel: "Karlsruhe",
 
     // Passwort (Spiel-Security)
-    password: "hannah<3",
+    password: "Sahne",
 
     // Hauptnachricht
     letter: `
-Hey Hannah,
-
-[Hier kommt deine Hauptnachricht rein.
-Gerne ruhig ein bisschen länger — das wirkt wie ein echter Brief.]
-
-Ich hab dich lieb.
-— [Dein Name]
+Nicht so lange her, kannten wir uns noch nichtmal. Zwei Seelen die durch diese Leben liefen, ohne einander zu sehen.
+Plötzlich und ohne Vorwarnung, verzweigten sich unsere Wege. 
+Man sagt, dass Menschen nie grundlos in dein Leben kommen. Aber unser Treffen hat mein Leben grundlegend verändert.
+Und das ist unglaublich. Je mehr Zeit ich mit dir verbringe, umso mehr vergesse ich wie mein Leben ohne dich war.
+Durch dich werde ich besser, und so viel glücklicher. Danke dass du in meinem Leben existierst Hannah.
+In aller Liebe,
+Niklas
     `.trim(),
 
     // Rätsel 1
     riddle1: {
-      question: "Wie heißt unser Insider-Name für ______?",
+      question: "9x-7i > 3(3x-7u)",
       // Vergleich: klein + ohne Leerzeichen (nicht zu fies)
-      answer: "beispielantwort",
+      answer: "i<3u",
       revealHtml: `
         <div class="letter"><strong>Freigeschaltet:</strong>
 
-[Hier kommt Zusatz ① rein – z.B. 3 Gründe, warum du sie magst,
-oder eine Erinnerung, die du schön findest.]</div>
+Packliste für den 24. Februar:
+- Badesachen (Handtücher, Flipflops usw.)
+- Abenteuerlust
+- Gesprächsstoff für 4 Stunden :)</div>
       `.trim()
     },
 
     // Rätsel 2
     riddle2: {
-      question: "Welche Zahl/Tag erinnert an ______? (z.B. 0908)",
-      answer: "0908",
-      revealHtml: `
-        <div class="letter"><strong>Freigeschaltet:</strong>
+  question: `public static void main (String[] args) {
+  System.out.println("Love you Mausi");
+}`,
+  answer: "Love you Mausi",
+  revealHtml: `
+    <div class="letter"><strong>Freigeschaltet:</strong>
 
-[Hier kommt Zusatz ② rein – z.B. eine Date-Idee, ein Versprechen,
-oder ein kleiner “Gutschein”.]</div>
-      `.trim()
-    },
+Meine Top 3 Lieblingserinnerungen:
+- 25. Januar: Mit Hannah im Schnee tanzen
+- 28. Dezember: Dich wiederzusehen nach unglaublich starkem Vermissen
+- 21. Januar: Von Creeps für immer vom Epplesee verschreckt worden zu werden XD
+Bonus: Ettlingen <3 (alles daran. Mcdonalds, das laufen, der Parkplatz...)</div>
+  `.trim()
+}, 
   };
 
   /*********************
@@ -712,10 +716,10 @@ oder ein kleiner “Gutschein”.]</div>
       ctx.fillRect(0,0,w,h);
 
       const now = performance.now();
-      if (now - lastRetarget > 3500){
-        lastRetarget = now;
-        retarget();
-      }
+      if (now - lastRetarget > 80){  // ~12x pro Sekunde
+  lastRetarget = now;
+  retarget();
+}
 
       for (const p of particles){
         const dx = p.tx - p.x;
