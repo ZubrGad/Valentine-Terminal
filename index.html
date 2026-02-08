@@ -323,6 +323,100 @@
       margin-top: 10px;
       line-height: 1.5;
     }
+/* ===== Media unter Herz ===== */
+.underHeartGif{
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 12px auto 0;
+  border-radius: 14px;
+  border: 1px solid rgba(31,26,20,.12);
+  box-shadow: var(--shadow2);
+  background: rgba(255,255,255,.25);
+}
+.slideshow{
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.slideFrame{
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(31,26,20,.12);
+  background: rgba(255,255,255,.35);
+  box-shadow: var(--shadow2);
+  min-height: 220px;
+}
+
+.slideImg{
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.slideCaption{
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: rgba(31,26,20,.85);
+  background: rgba(244,239,230,.82);
+  border: 1px solid rgba(31,26,20,.10);
+  backdrop-filter: blur(4px);
+}
+
+.slideBtn{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(31,26,20,.18);
+  background: rgba(255,255,255,.45);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.slideDots{
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  border: 1px solid rgba(31,26,20,.22);
+  background: rgba(255,255,255,.35);
+  opacity: .75;
+}
+
+.dot.active{
+  background: rgba(165,40,40,.75);
+  opacity: 1;
+}
+/* ===== Herz erst nach Login sichtbar ===== */
+.heartHidden{
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.heartVisible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity .8s ease, transform .8s ease;
+}
   </style>
 </head>
 
@@ -419,12 +513,27 @@
         <p>
           Tipp: Welche Zutat darf bei Niklas` Kochkünsten nie fehlen?
         </p>
-
+	<div class="divider"></div>
         <div style="margin-top:14px;">
-          <canvas id="heartCanvas"
-                  style="width:100%; height:240px; border-radius:18px; border:1px solid rgba(31,26,20,.12); background: rgba(255,255,255,.35); box-shadow: var(--shadow2);"></canvas>
-          <div class="tiny" style="margin-top:10px;">07.01.2026 <3.</div>
-        </div>
+          <div id="heartBlock" class="heartHidden">
+  <canvas id="heartCanvas"
+    style="width:100%; height:240px; border-radius:18px;
+    border:1px solid rgba(31,26,20,.12);
+    background: rgba(255,255,255,.35);
+    box-shadow: var(--shadow2);">
+  </canvas>
+
+  <video
+    class="underHeartGif"
+    src="assets_gear.gif.mp4"
+    autoplay
+    loop
+    muted
+    playsinline>
+  </video>
+
+  <div class="tiny" style="margin-top:10px;">07.01.2026 &lt;3.</div>
+</div>
 
         <div class="divider"></div>
         <div class="pill">Tipp: Groß-/Kleinschreibung zählt.</div>
@@ -447,13 +556,18 @@
 
     // Hauptnachricht
     letter: `
-Nicht so lange her, kannten wir uns noch nichtmal. Zwei Seelen die durch diese Leben liefen, ohne einander zu sehen.
-Plötzlich und ohne Vorwarnung, verzweigten sich unsere Wege. 
-Man sagt, dass Menschen nie grundlos in dein Leben kommen. Aber unser Treffen hat mein Leben grundlegend verändert.
-Und das ist unglaublich. Je mehr Zeit ich mit dir verbringe, umso mehr vergesse ich wie mein Leben ohne dich war.
-Durch dich werde ich besser, und so viel glücklicher. Danke dass du in meinem Leben existierst Hannah.
+Liebe Hannah,
+
+Mit dir zusammen zu sein, ist nicht so wie es in Filmen oder auf Instagram dargestellt wird. Es ist keine pure, gedankenlose Glücklichkeit. Es ist so viel mehr als das.
+Mit dir zusammen sein bedeutet für mich zu leben, zu lieben und zu leiden. Es bedeutet sich selbst verbessern zu wollen, um die beste Version von mir selbst zu sein.
+Es bedeutet zu wachsen, zu genießen und sich unglaublich auf das nächste Treffen zu freuen. Es bedeutet sich zu öffnen und so verletzlich zu sein wie noch nie.
+Und für all diese Gefühle bin ich unendlich dankbar! All die schönen Sachen die wir erlebten schwirren in meinem Gedächtnis. Selten habe ich mich so warm und aufgehoben gefühlt, wie nach der Bank in Stuttgart.
+Die (Emotionale) Nähe zu dir ist wie eine Sucht für mich. Ich kann nie genug davon bekommen.
+You are the y to my x.  
+"Man weiß, dass man verliebt ist, wenn man nicht einschlafen kann, weil die Realität endlich schöner ist als jeder Traum."
+So ist es mit dir zusammen zu sein.
 In aller Liebe,
-Niklas
+Dein Niklas
     `.trim(),
 
     // Rätsel 1
@@ -465,7 +579,7 @@ Niklas
         <div class="letter"><strong>Freigeschaltet:</strong>
 
 Packliste für den 24. Februar:
-- Badesachen (Handtücher, Flipflops usw.)
+- Badesachen (Bikini, Handtuch, Flipflops usw.)
 - Abenteuerlust
 - Gesprächsstoff für 4 Stunden :)</div>
       `.trim()
@@ -478,16 +592,58 @@ Packliste für den 24. Februar:
 }`,
   answer: "Love you Mausi",
   revealHtml: `
-    <div class="letter"><strong>Freigeschaltet:</strong>
+  <div class="letter"><strong>Freigeschaltet:</strong></div>
 
-Meine Top 3 Lieblingserinnerungen:
-- 25. Januar: Mit Hannah im Schnee tanzen
-- 28. Dezember: Dich wiederzusehen nach unglaublich starkem Vermissen
-- 21. Januar: Von Creeps für immer vom Epplesee verschreckt worden zu werden XD
-Bonus: Ettlingen <3 (alles daran. Mcdonalds, das laufen, der Parkplatz...)</div>
-  `.trim()
+  <div class="slideshow" id="slideshow2">
+    <button class="slideBtn prev" data-dir="-1" aria-label="Vorheriges Foto">‹</button>
+
+    <div class="slideFrame">
+      <img class="slideImg" id="slideImg2" alt="Foto" />
+      <div class="slideCaption" id="slideCaption2"></div>
+    </div>
+
+    <button class="slideBtn next" data-dir="1" aria-label="Nächstes Foto">›</button>
+  </div>
+
+  <div class="slideDots" id="slideDots2"></div>
+`.trim()
 }, 
   };
+
+const SLIDES2 = [
+  { src: "2_cuties.jpeg", caption: "2 Cuties" },
+  { src: "Bismarckturm.jpeg", caption: "Ettlingen lore, the beginning?!" },
+  { src: "Epic_Poker_Evening.jpeg", caption: "Von Christian nach stöhnen geranked werden🥵" },
+  { src: "Erstes_Bild.jpeg", caption: "Das erste Bild, von hoffentlich noch vielen weiteren" },
+  { src: "Klettergerüst.jpeg", caption: "High on Dopamin" },
+  { src: "Schoken_Club.jpeg", caption: "Wo 069 :(" },
+];
+
+let slide2Index = 0;
+
+function renderSlide2(){
+  const img = document.getElementById("slideImg2");
+  const cap = document.getElementById("slideCaption2");
+  const dots = document.getElementById("slideDots2");
+  if (!img || !cap || !dots) return;
+
+  const s = SLIDES2[slide2Index];
+  img.src = s.src;
+  cap.textContent = s.caption || "";
+
+  dots.innerHTML = "";
+  SLIDES2.forEach((_, i) => {
+    const d = document.createElement("div");
+    d.className = "dot" + (i === slide2Index ? " active" : "");
+    d.addEventListener("click", () => { slide2Index = i; renderSlide2(); });
+    dots.appendChild(d);
+  });
+}
+
+function stepSlide2(dir){
+  slide2Index = (slide2Index + dir + SLIDES2.length) % SLIDES2.length;
+  renderSlide2();
+}
 
   /*********************
    * UTIL
@@ -560,6 +716,12 @@ Bonus: Ettlingen <3 (alles daran. Mcdonalds, das laufen, der Parkplatz...)</div>
 
     $("reveal1").innerHTML = CONFIG.riddle1.revealHtml;
     $("reveal2").innerHTML = CONFIG.riddle2.revealHtml;
+// Herz & Video einblenden
+const hb = document.getElementById("heartBlock");
+if (hb){
+  hb.classList.remove("heartHidden");
+  hb.classList.add("heartVisible");
+}
   }
 
   /*********************
@@ -597,6 +759,14 @@ Bonus: Ettlingen <3 (alles daran. Mcdonalds, das laufen, der Parkplatz...)</div>
       $("tag2").textContent = "offen";
       $("tag2").style.color = "rgba(22,122,58,.95)";
       $("reveal2").style.display = "block";
+      // Slideshow initialisieren (nachdem reveal2 sichtbar ist)
+setTimeout(() => {
+  renderSlide2();
+  const root = document.getElementById("slideshow2");
+  if (!root) return;
+  root.querySelector(".prev")?.addEventListener("click", () => stepSlide2(-1));
+  root.querySelector(".next")?.addEventListener("click", () => stepSlide2(1));
+}, 0);
       setStatus($("riddle2Status"), "Richtig ✅", "ok");
       $("riddle2A").disabled = true;
       $("riddle2Btn").disabled = true;
